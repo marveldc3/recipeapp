@@ -1,6 +1,6 @@
 // src/components/RecipeDetail.tsx
 import React, { useContext } from "react";
-  import { RecipeContext } from "../App.tsx";
+  import { RecipeContext } from "../App";
 
   const RecipeDetail = ({ recipeId }: { recipeId: string }) => {
     const { state, dispatch } = useContext(RecipeContext);

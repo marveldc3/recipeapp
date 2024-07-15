@@ -1,6 +1,6 @@
 // src/components/RecipeForm.tsx
  import React, { useState, useContext } from "react";
-  import { RecipeContext } from "../App.tsx";
+  import { RecipeContext } from "../App";
 
   const RecipeForm = () => {
     const { state, dispatch } = useContext(RecipeContext);
