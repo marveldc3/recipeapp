@@ -1,0 +1,574 @@
+prompt:
+    // src/global.d.ts
+declare module '@vercel/kv' {
+  export const kv: {
+    set: <T>(key: string, value: T, ttl?: number | null) => Promise<void>;
+    get: <T>(key: string) => Promise<T | null>;
+    del: (key: string) => Promise<void>;
+    incr: (key: string, amount?: number) => Promise<number>;
+    expire: (key: string, ttl: number) => Promise<void>;
+    reset: () => Promise<void>;
+    keys: (prefix?: string) => Promise<string[]>;
+    ttl: (key: string) => Promise<number | null>;
+  };
+}
+```json
+// public/manifest.json
+{
+  "short_name": "Recipe App",
+  "name": "Recipe App",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/png"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
+```
+```json
+// .env
+KV_URL="redis://default:AbioAAIncDFhZmRhN2I0MTNhODQ0ZDNiYTUzOTZiYzFlZjJjNmU2NHAxNDcyNzI@helping-reptile-47272.upstash.io:6379"
+KV_REST_API_URL="https://helping-reptile-47272.upstash.io"
+KV_REST_API_TOKEN="AbioAAIncDFhZmRhN2I0MTNhODQ0ZDNiYTUzOTZiYzFlZjJjNmU2NHAxNDcyNzI"
+KV_REST_API_READ_ONLY_TOKEN="ArioAAIgcDGeufx99Rtue4ELgOuxJHl2Ao2Ia9lbETKf9T3JFokPdg"
+```
+```css
+// src/index.css
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+```
+```json
+// package.json
+{
+  "name": "recipe-app",
+  "version": "1.0.0",
+  "description": "Application de recettes de cuisine",
+  "main": "index.js",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "deploy": "vercel --prod"
+  },
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "@vercel/kv": "^1.0.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "4.0.3"
+  }
+}
+```
+#### `src/index.tsx`
+```typescript
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById("root")
+);
+```
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" content="Application de recettes de cuisine" />
+  <link rel="apple-touch-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico" />
+  <link rel="manifest" href="/manifest.json" />
+  <title>Recette App</title>
+  <link href="/static/css/main.css" rel="stylesheet" />
+</head>
+<body>
+  <noscript>Vous devez activer JavaScript pour utiliser cette application.</noscript>
+  <div id="root"></div>
+  <script src="/static/js/main.js"></script>
+</body>
+</html>
+```
+### **src/types.ts**
+Update the `RecipeAction` type to include the `isFavorite` property.
+```typescript
+// src/types.ts
+export interface Recipe {
+  id: string;
+  title: string;
+  ingredients: string[];
+  instructions: string[];
+  category: string;
+  cuisine: string;
+  prepTime: string;
+  servings: number;
+  imageUrl: string;
+}
+
+export interface RecipeState {
+  recipes: Recipe[];
+  favorites: string[];
+  searchQuery: string;
+  loading: boolean;
+  error: string;
+}
+
+export interface RecipeAction {
+  type: string;
+  payload?: any;
+  isFavorite?: boolean; // Add this line
+}
+```
+
+### **src/App.tsx**
+Update the `recipeReducer` to handle the `SET_FAVORITE` action type.
+```typescript
+import React, { createContext, useContext, useReducer } from "react";
+import { kv } from "@vercel/kv";
+import RecipeList from "./components/RecipeList";
+import RecipeDetail from "./components/RecipeDetail";
+import RecipeForm from "./components/RecipeForm";
+import FavoriteRecipes from "./components/FavoriteRecipes";
+import Header from "./components/Header";
+import { Recipe, RecipeState, RecipeAction } from './types'; // Import the types
+
+const RecipeContext = createContext<{
+  state: RecipeState;
+  dispatch: React.Dispatch<RecipeAction>;
+}>({
+  state: {
+    recipes: [],
+    favorites: [],
+    searchQuery: "",
+    loading: false,
+    error: "",
+  },
+  dispatch: () => null,
+});
+
+const recipeReducer = (state: RecipeState, action: RecipeAction) => {
+  switch (action.type) {
+    case "SET_SEARCH_QUERY":
+      return { ...state, searchQuery: action.payload };
+    case "SET_FAVORITES":
+      return { ...state, favorites: action.payload };
+    case "LOAD_RECIPES":
+      return { ...state, loading: true, error: "" };
+    case "SET_RECIPES":
+      return { ...state, loading: false, recipes: action.payload };
+    case "ERROR_RECIPES":
+      return { ...state, loading: false, error: action.payload };
+    case "SET_FAVORITE":
+      const updatedFavorites = action.isFavorite
+        ? [...state.favorites, action.payload]
+        : state.favorites.filter((id: string) => id !== action.payload);
+      return { ...state, favorites: updatedFavorites };
+    default:
+      return state;
+  }
+};
+
+const App = () => {
+  const [state, dispatch] = useReducer(recipeReducer, {
+    recipes: [],
+    favorites: [],
+    searchQuery: "",
+    loading: false,
+    error: "",
+  });
+
+  const setSearchQuery = (query: string) => {
+    dispatch({ type: "SET_SEARCH_QUERY", payload: query });
+  };
+
+  const setFavorite = async (recipeId: string, isFavorite: boolean) => {
+    try {
+      const favorites = isFavorite
+        ? [...state.favorites, recipeId]
+        : state.favorites.filter((id: string) => id !== recipeId);
+      await kv.set("user_favorites", JSON.stringify(favorites));
+      dispatch({ type: "SET_FAVORITES", payload: favorites });
+    } catch (error) {
+      console.error("Error setting favorite:", error);
+    }
+  };
+
+  return (
+    <RecipeContext.Provider value={{ state, dispatch }}>
+      <Header setSearchQuery={setSearchQuery} />
+      <RecipeList />
+      <RecipeDetail recipeId={"some_recipe_id"} />
+      <RecipeForm />
+      <FavoriteRecipes />
+    </RecipeContext.Provider>
+  );
+};
+
+export default App;
+export { RecipeContext };
+```
+
+### **src/components/RecipeDetail.tsx**
+Update the `RecipeDetail` component to dispatch the correct action.
+```typescript
+import React, { useContext } from "react";
+import { RecipeContext } from "../App";
+
+const RecipeDetail = ({ recipeId }: { recipeId: string }) => {
+  const { state, dispatch } = useContext(RecipeContext);
+  const { recipes } = state;
+
+  const recipe = recipes.find((recipe) => recipe.id === recipeId);
+
+  const isFavorite = state.favorites.includes(recipeId);
+  const toggleFavorite = () => {
+    dispatch({ type: "SET_FAVORITE", payload: recipeId, isFavorite: !isFavorite });
+  };
+
+  return (
+    <div>
+      {recipe && (
+        <div>
+          <h2>{recipe.title}</h2>
+          <img src={recipe.imageUrl} alt={recipe.title} />
+          <p>Category: {recipe.category}</p>
+          <p>Cuisine: {recipe.cuisine}</p>
+          <p>Prep Time: {recipe.prepTime}</p>
+          <p>Servings: {recipe.servings}</p>
+          <ul>
+            {recipe.ingredients.map((ingredient, index) => (
+              <li key={index}>{ingredient}</li>
+            ))}
+          </ul>
+          <ol>
+            {recipe.instructions.map((instruction, index) => (
+              <li key={index}>{instruction}</li>
+            ))}
+          </ol>
+          <button onClick={toggleFavorite}>
+            {isFavorite ? "Remove from Favorites" : "Add to Favorites"}
+          </button>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default RecipeDetail;
+```
+
+### **src/components/RecipeForm.tsx**
+Update the `RecipeForm` component to add new recipes.
+```typescript
+import React, { useState, useContext } from "react";
+import { RecipeContext } from "../App";
+import { kv } from "@vercel/kv";
+const RecipeForm = () => {
+  const { state, dispatch } = useContext(RecipeContext);
+  const { loading, error } = state;
+
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [ingredients, setIngredients] = useState("");
+  const [instructions, setInstructions] = useState("");
+  const [category, setCategory] = useState("");
+  const [cuisine, setCuisine] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (
+      title.trim().length < 3 ||
+      description.trim().length < 10 ||
+      ingredients.trim().length < 10 ||
+      instructions.trim().length < 10 ||
+      category.trim().length < 3 ||
+      cuisine.trim().length < 3 ||
+      imageUrl.trim().length < 5
+    ) {
+      alert("Please fill in all fields correctly.");
+      return;
+    }
+
+    try {
+      const newRecipe = { id: Date.now().toString(), title, description, ingredients, instructions, category, cuisine, prepTime: "N/A", servings: 0, imageUrl };
+      await kv.set("recipes", JSON.stringify([...state.recipes, newRecipe]));
+      dispatch({ type: "SET_RECIPES", payload: [...state.recipes, newRecipe] });
+      setTitle("");
+      setDescription("");
+      setIngredients("");
+      setInstructions("");
+      setCategory("");
+      setCuisine("");
+      setImageUrl("");
+      alert("Recipe added successfully!");
+    } catch (error) {
+      console.error("Error adding recipe:", error);
+      alert("Error adding recipe. Please try again later.");
+    }
+  };
+
+  return (
+    <div>
+      {loading && <p>Loading...</p>}
+      {error && <p>Error: {error}</p>}
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="title">Title</label>
+        <input type="text" id="title" value={title} onChange={(event) => setTitle(event.target.value)} />
+        <label htmlFor="description">Description</label>
+        <textarea id="description" value={description} onChange={(event) => setDescription(event.target.value)} />
+        <label htmlFor="ingredients">Ingredients</label>
+        <textarea id="ingredients" value={ingredients} onChange={(event) => setIngredients(event.target.value)} />
+        <label htmlFor="instructions">Instructions</label>
+        <textarea id="instructions" value={instructions} onChange={(event) => setInstructions(event.target.value)} />
+        <label htmlFor="category">Category</label>
+        <input type="text" id="category" value={category} onChange={(event) => setCategory(event.target.value)} />
+        <label htmlFor="cuisine">Cuisine</label>
+        <input type="text" id="cuisine" value={cuisine} onChange={(event) => setCuisine(event.target.value)} />
+        <label htmlFor="imageUrl">Image URL</label>
+        <input type="text" id="imageUrl" value={imageUrl} onChange={(event) => setImageUrl(event.target.value)} />
+        <button type="submit">Add Recipe</button>
+      </form>
+    </div>
+  );
+};
+
+export default RecipeForm;
+```
+
+### **src/components/FavoriteRecipes.tsx**
+Ensure `RecipeDetail` is imported correctly.
+```typescript
+import React, { useContext } from "react";
+import { RecipeContext } from "../App";
+import RecipeDetail from "./RecipeDetail";
+
+const FavoriteRecipes = () => {
+  const { state } =
+
+ useContext(RecipeContext);
+  const { favorites, recipes } = state;
+
+  const favoriteRecipes = recipes.filter((recipe) => favorites.includes(recipe.id));
+
+  return (
+    <div>
+      <h2>Favorite Recipes</h2>
+      {favoriteRecipes.length === 0 && <p>No favorite recipes yet.</p>}
+      {favoriteRecipes.map((recipe) => (
+        <RecipeDetail key={recipe.id} recipeId={recipe.id} />
+      ))}
+    </div>
+  );
+};
+
+export default FavoriteRecipes;
+```
+
+### **src/components/Header.tsx**
+Ensure the `setSearchQuery` function is passed and used correctly.
+```typescript
+import React from "react";
+
+const Header = ({ setSearchQuery }: { setSearchQuery: (query: string) => void }) => {
+  return (
+    <header>
+      <h1>Recipe App</h1>
+      <input type="text" placeholder="Search recipes..." onChange={(e) => setSearchQuery(e.target.value)} />
+    </header>
+  );
+};
+
+export default Header;
+```
+
+### **src/components/RecipeList.tsx**
+Ensure the `RecipeList` component is implemented correctly to display the list of recipes.
+```typescript
+import React, { useContext } from "react";
+import { RecipeContext } from "../App";
+import RecipeDetail from "./RecipeDetail";
+
+const RecipeList = () => {
+  const { state } = useContext(RecipeContext);
+  const { recipes, searchQuery } = state;
+
+  const filteredRecipes = recipes.filter((recipe) =>
+    recipe.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  return (
+    <div>
+      <h2>Recipes</h2>
+      {filteredRecipes.length === 0 && <p>No recipes found.</p>}
+      {filteredRecipes.map((recipe) => (
+        <RecipeDetail key={recipe.id} recipeId={recipe.id} />
+      ))}
+    </div>
+  );
+};
+
+export default RecipeList;
+```
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+credentials database:
+redis-cli --tls -u redis://default:AbioAAIncDFhZmRhN2I0MTNhODQ0ZDNiYTUzOTZiYzFlZjJjNmU2NHAxNDcyNzI@helping-reptile-47272.upstash.io:6379
+import { kv } from "@vercel/kv";
+await kv.set("user_1_session", "session_token_value");
+const session = await kv.get("user_1_session");
+curl "https://helping-reptile-47272.upstash.io/set/user_1_session/session_token_value"   -H "Authorization: Bearer AbioAAIncDFhZmRhN2I0MTNhODQ0ZDNiYTUzOTZiYzFlZjJjNmU2NHAxNDcyNzI"
+fetch("https://helping-reptile-47272.upstash.io/set/user_1_session/session_token_value", {
+  headers: {
+    Authorization: "Bearer AbioAAIncDFhZmRhN2I0MTNhODQ0ZDNiYTUzOTZiYzFlZjJjNmU2NHAxNDcyNzI"
+  }
+}).then(response => response.json())
+  .then(data => console.log(data));
+KV_URL="redis://default:AbioAAIncDFhZmRhN2I0MTNhODQ0ZDNiYTUzOTZiYzFlZjJjNmU2NHAxNDcyNzI@helping-reptile-47272.upstash.io:6379"
+KV_REST_API_URL="https://helping-reptile-47272.upstash.io"
+KV_REST_API_TOKEN="AbioAAIncDFhZmRhN2I0MTNhODQ0ZDNiYTUzOTZiYzFlZjJjNmU2NHAxNDcyNzI"
+KV_REST_API_READ_ONLY_TOKEN="ArioAAIgcDGeufx99Rtue4ELgOuxJHl2Ao2Ia9lbETKf9T3JFokPdg"
+
+Getting Started
+
+Get started using this KV Database by following the steps in one of these guides.
+
+1
+
+Connect to a project
+Start by connecting to your existing project and then run vercel link in the CLI to link to the project locally.
+If you don’t already have a project to connect to, you can get started with a KV template.
+
+2
+
+Pull your latest environment variables
+Run vercel env pull .env.development.local to make the latest environment variables available to your project locally.
+
+3
+
+Install our package
+Then run npm install @vercel/kv to install the Vercel KV SDK.
+
+4
+
+Use in code
+This example uses Next.js. It will create a Server Component accessing a KV Database.
+app/cart/[user]/page.tsx
+TypeScript
+
+import { kv } from "@vercel/kv";
+
+export default async function Cart({ params }: { params: { user: string } }) {
+  const cart = await kv.get<{ id: string; quantity: number }[]>(params.user);
+  return (
+    <div>
+      {cart?.map((item) => (
+        <div key={item.id}>
+          {item.id} - {item.quantity}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+to do:
+
+- use local storage for something
+- use api to populate database
+- css
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+consigne
+
+Projet : Application de Recettes de Cuisine 
+Description Générale 
+Cette application permettra aux utilisateurs de rechercher, ajouter et consulter des recettes de  cuisine. Elle inclura également une fonctionnalité pour marquer les recettes comme favorites.  Le projet utilisera React JS pour l'interface utilisateur, TypeScript pour la gestion des types et  des états, ainsi que HTML/CSS pour le design et la mise en page. 
+Fonctionnalités Détails 
+1. Recherche de Recettes 
+• Barre de recherche avec suggestions automatiques : 
+o Affichage des suggestions basées sur les caractères saisis. 
+o Recherche en temps réel dans une base de données de recettes. 
+2. Affichage des Recettes 
+• Liste des Recettes : 
+o Affichage des recettes sous forme de cartes avec un aperçu rapide (image, titre,  temps de préparation). 
+o Possibilité de filtrer les recettes par catégorie (ex: entrées, plats principaux,  desserts) et par type de cuisine (ex: italienne, asiatique). 
+• Détails de la Recette : 
+o Page détaillée affichant le titre, l'image, la liste des ingrédients et les étapes de  préparation. 
+o Informations additionnelles comme le temps de préparation, le nombre de  portions et des conseils de cuisine. 
+3. Ajout de Recettes 
+• Formulaire de Soumission : 
+o Formulaire permettant d’ajouter une nouvelle recette avec des champs pour le  titre, la description, les ingrédients, les étapes de préparation, la catégorie et  une image. 
+o Validation des champs pour s'assurer que toutes les informations nécessaires  sont fournies. La vérification des champs se fera pendant le remplissage de  l’utilisateur (Exemple : lorsque l’utilisateur écrit dans le champ « titre » tant  que le texte ne fait pas minimum 3 caractère il y aura une erreur d’afficher sous  le champs indiquant « le titre doit faire minimum 3 caractères ».) 
+4. Favoris 
+• Ajout aux Favoris : 
+o Bouton permettant d'ajouter ou de retirer une recette des favoris. 
+o Stockage des recettes favorites dans le local storage pour persister entre les  sessions. 
+• Affichage des Favoris : 
+o Page dédiée affichant toutes les recettes marquées comme favorites.
+Architecture de l'Application 
+Composants React 
+• App Component : Composant principal gérant la navigation et l'état global de  l'application. 
+• Header Component : Composant pour le menu de navigation (recherche, ajout de  recettes, favoris). 
+• RecipeList Component : Composant pour afficher la liste des recettes avec filtres et  recherche. 
+• RecipeDetail Component : Composant pour afficher les détails d'une recette  spécifique. 
+• RecipeForm Component : Composant pour le formulaire d'ajout de recette. • FavoriteRecipes Component : Composant pour afficher les recettes favorites. 
+Gestion de l'État avec TypeScript 
+• State Management : 
+o Utilisation de useState et useReducer pour la gestion des états locaux et  globaux. 
+o Utilisation de TypeScript pour définir les types des recettes, des actions et des  états. 
+• Actions et Reducers : 
+o Définir des actions pour ajouter, supprimer, rechercher des recettes et gérer les  favoris. 
+o Utiliser des reducers pour manipuler l'état global de l'application. 
+Technologies et Outils 
+Frameworks et Bibliothèques 
+• React JS : Pour la création des composants de l'interface utilisateur. • TypeScript : Pour le typage statique et la gestion des états. 
+• React Router : Pour la navigation entre les différentes pages de l'application. Design et Mise en Page 
+• HTML/CSS : Pour la structure et le style de l'application. 
+• Flexbox/Grid : Pour la mise en page responsive. 
+Outils de Développement 
+• Visual Studio Code : IDE recommandé pour le développement. 
+• Git/GitHub : Pour la gestion de versions et le contrôle de source. 
+Détails de Déploiement 
+Environnement de Développement 
+• Node.js et npm : Pour gérer les dépendances et exécuter les scripts de développement.
+• Setup : 
+o Cloner le dépôt GitHub. 
+o Installer les dépendances avec npm install. 
+o Lancer l'application en mode développement avec npm start. 
+• Build et Déploiement : 
+o Générer une version optimisée pour la production avec npm run build. o Déployer sur une plateforme d'hébergement comme Vercel, Netlify ou GitHub  Pages. 
+Documentation 
+• README : 
+o Instructions pour installer et lancer le projet. 
+o Description des fonctionnalités et des composants. 
+o Explications sur les choix techniques et l'architecture du projet. 
+• Commentaires : 
+o Ajouter des commentaires pertinents dans le code pour expliquer la logique et  les choix de conception. 
+Présentation le 22 juillet avec un support de présentation contenant des maquettes réalisées sur Figma et la planification des tâches effectués. Le passage du candidat devra durer environ  15-20 minutes par candidat. 
+Compétences évaluées : 
+1 : Installer et configurer son environnement de travail en fonction du projet 2 : Développer des interfaces utilisateur 
+4 : Contribuer à la gestion d’un projet informatique 
+5 : Analyser les besoins et maquetter une application
