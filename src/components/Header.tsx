@@ -1,21 +1,25 @@
 // src/components/Header.tsx
 import React, { useState, useContext } from "react";
-  import { RecipeContext } from "../App.tsx";
+import { RecipeContext } from "../App";
 
-  const Header = () => {
-    const { state, dispatch } = useContext(RecipeContext);
-    const [searchQuery, setSearchQuery] = useState("");
+interface HeaderProps {
+  setSearchQuery: (query: string) => void; // Define the prop type
+}
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      setSearchQuery(event.target.value);
-      dispatch({ type: "SET_SEARCH_QUERY", payload: event.target.value });
-    };
+const Header: React.FC<HeaderProps> = ({ setSearchQuery }) => {
+  const { state, dispatch } = useContext(RecipeContext);
+  const [searchQuery, setSearchQueryLocal] = useState("");
 
-    return (
-      <div>
-        <input type="text" placeholder="Search recipes..." value={searchQuery} onChange={handleChange} />
-      </div>
-    );
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQueryLocal(event.target.value);
+    setSearchQuery(event.target.value); // Call the prop function
   };
 
-  export default Header;
+  return (
+    <div>
+      <input type="text" placeholder="Search recipes..." value={searchQuery} onChange={handleChange} />
+    </div>
+  );
+};
+
+export default Header;

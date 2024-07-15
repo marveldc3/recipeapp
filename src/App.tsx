@@ -5,7 +5,7 @@ import RecipeList from "./components/RecipeList";
 import RecipeDetail from "./components/RecipeDetail";
 import RecipeForm from "./components/RecipeForm";
 import FavoriteRecipes from "./components/FavoriteRecipes";
-import Header from "./components/Header";
+import Header from "./components/Header"; // Removed .tsx extension
 
 interface Recipe {
   id: string;
@@ -80,7 +80,7 @@ const App = () => {
     try {
       const favorites = isFavorite
         ? [...state.favorites, recipeId]
-        : state.favorites.filter((id: string) => id !== recipeId);
+        : state.favorites.filter((id) => id !== recipeId);
       await kv.set("user_favorites", JSON.stringify(favorites));
       dispatch({ type: "SET_FAVORITES", payload: favorites });
     } catch (error) {
