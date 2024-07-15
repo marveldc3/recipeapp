@@ -1,6 +1,6 @@
 // src/components/FavoriteRecipes.tsx
 import React, { useContext } from "react";
-import { RecipeContext } from "../App";
+import { RecipeContext } from "../App.tsx";
 
 const FavoriteRecipes = () => {
   const { state } = useContext(RecipeContext);

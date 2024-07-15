@@ -1,6 +1,6 @@
 // src/components/Header.tsx
 import React, { useState } from "react";
-import { RecipeContext } from "../App";
+import { RecipeContext } from "../App.tsx";
 
 const Header = () => {
   const { state, dispatch } = useContext(RecipeContext);

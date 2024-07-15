@@ -1,6 +1,6 @@
 // src/components/RecipeList.tsx
 import React, { useContext } from "react";
-import { RecipeContext } from "../App";
+import { RecipeContext } from "../App.tsx";
 
 const RecipeList = () => {
   const { state } = useContext(RecipeContext);
