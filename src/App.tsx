@@ -6,31 +6,7 @@ import RecipeDetail from "./components/RecipeDetail";
 import RecipeForm from "./components/RecipeForm";
 import FavoriteRecipes from "./components/FavoriteRecipes";
 import Header from "./components/Header";
-
-interface Recipe {
-  id: string;
-  title: string;
-  ingredients: string[];
-  instructions: string[];
-  category: string;
-  cuisine: string;
-  prepTime: string;
-  servings: number;
-  imageUrl: string;
-}
-
-interface RecipeState {
-  recipes: Recipe[];
-  favorites: string[];
-  searchQuery: string;
-  loading: boolean;
-  error: string;
-}
-
-interface RecipeAction {
-  type: string;
-  payload?: any;
-}
+import { Recipe, RecipeState, RecipeAction } from './types'; // Import the types
 
 const RecipeContext = createContext<{
   state: RecipeState;
@@ -58,6 +34,11 @@ const recipeReducer = (state: RecipeState, action: RecipeAction) => {
       return { ...state, loading: false, recipes: action.payload };
     case "ERROR_RECIPES":
       return { ...state, loading: false, error: action.payload };
+    case "SET_FAVORITE":
+      const updatedFavorites = action.isFavorite
+        ? [...state.favorites, action.payload]
+        : state.favorites.filter((id: string) => id !== action.payload);
+      return { ...state, favorites: updatedFavorites };
     default:
       return state;
   }
@@ -92,7 +73,6 @@ const App = () => {
     <RecipeContext.Provider value={{ state, dispatch }}>
       <Header setSearchQuery={setSearchQuery} />
       <RecipeList />
-      {/* Pass recipeId to RecipeDetail */}
       <RecipeDetail recipeId={"some_recipe_id"} />
       <RecipeForm />
       <FavoriteRecipes />

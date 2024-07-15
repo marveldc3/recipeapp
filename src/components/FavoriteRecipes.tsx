@@ -1,26 +1,23 @@
 // src/components/FavoriteRecipes.tsx
 import React, { useContext } from "react";
 import { RecipeContext } from "../App";
-import RecipeDetail from "./RecipeDetail"; 
+import RecipeDetail from "./RecipeDetail";
 
 const FavoriteRecipes = () => {
-  const { state } = useContext(RecipeContext);
-  const { favorites } = state;
+  const { state } =
+
+ useContext(RecipeContext);
+  const { favorites, recipes } = state;
+
+  const favoriteRecipes = recipes.filter((recipe) => favorites.includes(recipe.id));
 
   return (
     <div>
-      {favorites.length > 0 && (
-        <>
-          <h2>Favorites</h2>
-          <ul>
-            {favorites.map((recipeId) => (
-              <li key={recipeId}>
-                <RecipeDetail recipeId={recipeId} /> {/* Provide the recipeId prop */}
-              </li>
-            ))}
-          </ul>
-        </>
-      )}
+      <h2>Favorite Recipes</h2>
+      {favoriteRecipes.length === 0 && <p>No favorite recipes yet.</p>}
+      {favoriteRecipes.map((recipe) => (
+        <RecipeDetail key={recipe.id} recipeId={recipe.id} />
+      ))}
     </div>
   );
 };
