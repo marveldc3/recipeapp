@@ -1,5 +1,5 @@
 // src/App.tsx
-import React, { createContext, useContext, useState, useReducer } from "react";
+import React, { createContext, useContext, useReducer } from "react";
 import { kv } from "@vercel/kv";
 import RecipeList from "./components/RecipeList.tsx";
 import RecipeDetail from "./components/RecipeDetail.tsx";
@@ -58,6 +58,8 @@ const recipeReducer = (state: RecipeState, action: RecipeAction) => {
       return { ...state, loading: false, recipes: action.payload };
     case "ERROR_RECIPES":
       return { ...state, loading: false, error: action.payload };
+    default:
+      return state;
   }
 };
 
