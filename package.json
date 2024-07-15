@@ -1,4 +1,4 @@
-{
+  {
   "name": "recipeapp",
   "version": "1.0.0",
   "description": "Application de recettes de cuisine",
@@ -15,10 +15,10 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "^5.0.1",
-    "typescript": "^3.2.1"
+    "typescript": "^3.2.1",
+    "@vercel/kv": "^2.0.0"
   },
   "devDependencies": {
-    "@types/react": "^18.3.3",
-    "@vercel/kv": "^2.0.0"
+    "@types/react": "^18.3.3"
   }
 }
