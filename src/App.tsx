@@ -1,11 +1,11 @@
 // src/App.tsx
 import React, { createContext, useContext, useReducer } from "react";
 import { kv } from "@vercel/kv";
-import RecipeList from "./components/RecipeList.tsx";
-import RecipeDetail from "./components/RecipeDetail.tsx";
-import RecipeForm from "./components/RecipeForm.tsx";
-import FavoriteRecipes from "./components/FavoriteRecipes.tsx";
-import Header from "./components/Header.tsx";
+import RecipeList from "./components/RecipeList";
+import RecipeDetail from "./components/RecipeDetail";
+import RecipeForm from "./components/RecipeForm";
+import FavoriteRecipes from "./components/FavoriteRecipes";
+import Header from "./components/Header";
 
 interface Recipe {
   id: string;
