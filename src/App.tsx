@@ -80,7 +80,7 @@ const App = () => {
     try {
       const favorites = isFavorite
         ? [...state.favorites, recipeId]
-        : state.favorites.filter((id) => id !== recipeId);
+        : state.favorites.filter((id: string) => id !== recipeId);
       await kv.set("user_favorites", JSON.stringify(favorites));
       dispatch({ type: "SET_FAVORITES", payload: favorites });
     } catch (error) {
