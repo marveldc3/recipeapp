@@ -1,5 +1,5 @@
 // src/types.ts
-interface Recipe {
+export interface Recipe {
   id: string;
   title: string;
   ingredients: string[];
@@ -11,7 +11,7 @@ interface Recipe {
   imageUrl: string;
 }
 
-interface RecipeState {
+export interface RecipeState {
   recipes: Recipe[];
   favorites: string[];
   searchQuery: string;
@@ -19,7 +19,7 @@ interface RecipeState {
   error: string;
 }
 
-interface RecipeAction {
+export interface RecipeAction {
   type: string;
   payload?: any;
   isFavorite?: boolean; // Add this line
