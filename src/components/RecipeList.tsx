@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import { RecipeContext } from "../App";
 
 const RecipeList = () => {
-  const { state, dispatch } = useContext(RecipeContext);
+  const { state } = useContext(RecipeContext);
   const { recipes, searchQuery, favorites, loading, error } = state;
 
   const filteredRecipes = recipes.filter((recipe) =>
