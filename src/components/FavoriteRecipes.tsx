@@ -1,7 +1,7 @@
 // src/components/FavoriteRecipes.tsx
 import React, { useContext } from "react";
 import { RecipeContext } from "../App";
-import RecipeDetail from "./RecipeDetail.tsx"; // Ensure this import is present
+import RecipeDetail from "./RecipeDetail"; 
 
 const FavoriteRecipes = () => {
   const { state } = useContext(RecipeContext);
