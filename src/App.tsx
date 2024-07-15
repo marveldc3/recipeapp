@@ -2,7 +2,7 @@
 import React, { createContext, useContext, useState, useReducer } from "react";
 import { kv } from "@vercel/kv";
 import RecipeList from "./components/RecipeList.tsx";
-import RecipeDetail from "./components/RecipeDetail.ts";
+import RecipeDetail from "./components/RecipeDetail.tsx";
 import RecipeForm from "./components/RecipeForm.tsx";
 import FavoriteRecipes from "./components/FavoriteRecipes.tsx";
 import Header from "./components/Header.tsx";
