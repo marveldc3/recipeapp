@@ -31,7 +31,7 @@ const RecipeForm = () => {
     }
 
     try {
-      await kv.set("recipes", JSON.stringify([...state.recipes, { id: Date.now().toString(), title, description, ingredients, instructions, category, cuisine, prepTime: "N/A", servings: 0, imageUrl }]);
+      await kv.set("recipes", JSON.stringify([...state.recipes, { id: Date.now().toString(), title, description, ingredients, instructions, category, cuisine, prepTime: "N/A", servings: 0, imageUrl }]));
       setTitle("");
       setDescription("");
       setIngredients("");

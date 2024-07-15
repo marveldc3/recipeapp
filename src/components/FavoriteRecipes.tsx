@@ -9,14 +9,16 @@ const FavoriteRecipes = () => {
   return (
     <div>
       {favorites.length > 0 && (
-        <h2>Favorites</h2>
-        <ul>
-          {favorites.map((recipeId) => (
-            <li key={recipeId}>
-              <RecipeDetail recipeId={recipeId} />
-            </li>
-          ))}
-        </ul>
+        <>
+          <h2>Favorites</h2>
+          <ul>
+            {favorites.map((recipeId) => (
+              <li key={recipeId}>
+                <RecipeDetail recipeId={recipeId} />
+              </li>
+            ))}
+          </ul>
+        </>
       )}
     </div>
   );

@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import { RecipeContext } from "../App";
 
 const RecipeDetail = ({ recipeId }: { recipeId: string }) => {
-  const { state, dispatch } = useContext(RecipeContext);
+  const { state } = useContext(RecipeContext);
   const { recipes } = state;
 
   const recipe = recipes.find((recipe) => recipe.id === recipeId);

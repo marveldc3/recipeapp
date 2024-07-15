@@ -18,24 +18,28 @@ const RecipeList = () => {
       {loading && <p>Loading...</p>}
       {error && <p>Error: {error}</p>}
       {favoriteRecipes.length > 0 && (
-        <h2>Favorites</h2>
-        <ul>
-          {favoriteRecipes.map((recipe) => (
-            <li key={recipe.id}>
-              {recipe.title} - {recipe.category} - {recipe.cuisine}
-            </li>
-          ))}
-        </ul>
+        <>
+          <h2>Favorites</h2>
+          <ul>
+            {favoriteRecipes.map((recipe) => (
+              <li key={recipe.id}>
+                {recipe.title} - {recipe.category} - {recipe.cuisine}
+              </li>
+            ))}
+          </ul>
+        </>
       )}
       {nonFavoriteRecipes.length > 0 && (
-        <h2>Non-favorites</h2>
-        <ul>
-          {nonFavoriteRecipes.map((recipe) => (
-            <li key={recipe.id}>
-              {recipe.title} - {recipe.category} - {recipe.cuisine}
-            </li>
-          ))}
-        </ul>
+        <>
+          <h2>Non-favorites</h2>
+          <ul>
+            {nonFavoriteRecipes.map((recipe) => (
+              <li key={recipe.id}>
+                {recipe.title} - {recipe.category} - {recipe.cuisine}
+              </li>
+            ))}
+          </ul>
+        </>
       )}
     </div>
   );
