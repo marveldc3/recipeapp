@@ -1,25 +1,30 @@
 // package.json
 {
-  "name": "<your-project-name>",
+  "name": "recipeapp",
   "version": "1.0.0",
-  "description": "<your-project-description>",
-  "main": "index.js",
+  "description": "Application de recettes de cuisine",
+  "main": "dist/index.js",
   "scripts": {
-    "start": "webpack serve",
-    "build": "webpack",
-    "deploy": "yarn build && node populateDatabase.ts && echo Populating database with Edamam data done."
+    "start": "react-scripts start",
+    "build": "react-scripts build && ncc build",
+    "deploy": "vercel --prod",
+    "postinstall": "node api/populateDatabase.ts"
   },
-  "keywords": [],
-  "author": "<your-username>",
-  "license": "ISC",
+  "author": "Your Name",
+  "license": "MIT",
   "dependencies": {
-    "@vercel/kv": "^1.0.0",
-    "node-fetch": "^3.0.0"
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vercel/kv": "^2.0.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "^5.0.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^3.2.1"
   },
-  "devDependencies": {
-    "typescript": "^4.5.2",
-    "webpack": "^5.65.0",
-    "webpack-cli": "^4.9.1",
-    "webpack-dev-server": "^4.6.0"
+  "devDependencies": {},
+  "engines": {
+    "node": ">=14.0.0"
   }
+}
 }
