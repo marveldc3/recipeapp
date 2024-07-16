@@ -2,8 +2,8 @@
   "version": 2,
   "functions": [
     {
-      "function": "populate-kv",
-      "path": "/populate-kv"
+      "function": "populate",
+      "path": "/populate"
     }
   ]
 }
