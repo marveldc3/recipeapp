@@ -1,30 +1,36 @@
 import axios from 'axios';
+import { kv } from '@vercel/kv';
 
-const handler = async (req, res) => {
-  const appId = '782a8c61';
-  const appKey = 'a1942b18ea7db3be941b03c4050b6b85';
+const appId = '782a8c61';
+const appKey = 'a1942b18ea7db3be941b03c4050b6b85';
 
-  const { query: { query } = {} } = req;
-
-  if (!appId || !appKey) {
-    return res.status(500).send('Missing Edamam API credentials.');
-  }
-
+const fetchRecipes = async (query: string) => {
   try {
     const response = await axios.get('https://api.edamam.com/api/recipes/v2', {
       params: {
         q: query,
         app_id: appId,
         app_key: appKey,
-        type: 'any',
       },
     });
 
-    return res.status(200).json(response.data);
+    return response.data.hits;
   } catch (error) {
-    console.error('An error occurred while fetching recipes: ', error);
-    return res.status(500).send('Internal Server Error.');
+    console.error('Error fetching recipes:', error);
+    return [];
   }
 };
 
-export default handler;
+const saveRecipesToKVDatabase = async (recipes: Recipe[]) => {
+  try {
+    await kv.set('recipes', JSON.stringify(recipes));
+    console.log('Recipes saved to KV Database.');
+  } catch (error) {
+    console.error('Error saving recipes to KV Database:', error);
+  }
+};
+
+export const populateRecipes = async (query: string) => {
+  const recipes = await fetchRecipes(query);
+  await saveRecipesToKVDatabase(recipes);
+};
