@@ -10,7 +10,7 @@
   "deploy": "vercel --prod",
   "populateDatabase": "ts-node --transpile-only populateDatabase.tsx",
   "fullStart": "npm run populateDatabase && npm start"
-}
+},
   "author": "Your Name",
   "license": "MIT",
   "dependencies": {
