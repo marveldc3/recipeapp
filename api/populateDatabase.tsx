@@ -1,5 +1,5 @@
-import { VercelRequest, VercelResponse } from '@vercel/node';
-import { kv } from '@vercel/kv';
+import { VercelRequest, VercelResponse } from '@vercel/node/mjs';
+import { kv } from '@vercel/kv/mjs';
 import fetch from 'node-fetch';
 
 const APP_ID = '782a8c61';

@@ -1,6 +1,7 @@
   {
   "name": "recipeapp",
   "version": "1.0.0",
+  "type": "module",
   "description": "Application de recettes de cuisine",
   "main": "index.js",
   "scripts": {
