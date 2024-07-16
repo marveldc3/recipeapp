@@ -8,13 +8,14 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "deploy": "vercel --prod",
-    "postinstall": "npx tsx api/populateDatabase.tsx"
+    "postinstall": "npx ncc build api/*.ts --out-dir api && rm api/**/*.ts"
   },
   "author": "Your Name",
   "license": "MIT",
   "dependencies": {
     "@types/react-dom": "^18.3.0",
     "@vercel/kv": "^2.0.0",
+    "ncc": "^0.3.6",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "^5.0.1",
