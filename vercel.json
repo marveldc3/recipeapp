@@ -1,9 +1,6 @@
 {
   "version": 2,
   "functions": {
-    "populate": {
-      "src": "populate.tsx",
-      "events": ["http"]
-    }
+    "api": {}
   }
 }
