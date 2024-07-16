@@ -70,19 +70,18 @@ const App = () => {
     }
   };
 
-  return (
+ return (
     <RecipeContext.Provider value={{ state, dispatch }}>
-      <Header setSearchQuery={setSearchQuery} />
-      <RecipeList />
-      <RecipeDetail recipeId={"some_recipe_id"} />
-      <RecipeForm />
-      <FavoriteRecipes />
+      <div>
+        <Header setSearchQuery={setSearchQuery} />
+        <RecipeList />
+        <RecipeDetail recipeId={"some_recipe_id"} />
+        <RecipeForm />
+        <FavoriteRecipes />
+        <CheckKV />
+      </div>
     </RecipeContext.Provider>
-	<div>
-	<CheckKV />
-	</div>
   );
 };
-
 export default App;
 export { RecipeContext };
