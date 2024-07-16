@@ -1,7 +1,7 @@
 {
   "version": 2,
   "functions": {
-    "populate-kv": {
+    "populate": {
       "src": "populate.tsx",
       "events": ["http"]
     }
