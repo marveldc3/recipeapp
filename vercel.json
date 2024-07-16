@@ -1,8 +1,8 @@
 {
   "version": 2,
   "functions": {
-    "api": {
-      "events": ["http"]
+    "api/**/*.tsx": {
+      "platform": "node"
     }
   }
 }
