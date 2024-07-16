@@ -7,6 +7,7 @@ import RecipeForm from "./components/RecipeForm";
 import FavoriteRecipes from "./components/FavoriteRecipes";
 import Header from "./components/Header";
 import { Recipe, RecipeState, RecipeAction } from './types'; // Import the types
+import CheckKV from "./components/CheckKV"; 
 
 const RecipeContext = createContext<{
   state: RecipeState;
@@ -77,6 +78,7 @@ const App = () => {
       <RecipeForm />
       <FavoriteRecipes />
     </RecipeContext.Provider>
+	<CheckKV />
   );
 };
 
