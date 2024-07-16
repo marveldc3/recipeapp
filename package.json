@@ -6,7 +6,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "deploy": "npm run build && vercel --prod --token wkL3kdHBWQxGasxbHiXbaCP5 && node populateDatabase.tsx"
+    "deploy": "vercel --prod"
+	"postinstall": "node api/populateDatabase.tsx"
   },
   "author": "Your Name",
   "license": "MIT",
