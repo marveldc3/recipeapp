@@ -1,9 +1,9 @@
 {
   "version": 2,
-  "functions": [
-    {
-      "function": "populate",
-      "path": "/populate"
+  "functions": {
+    "populate-kv": {
+      "src": "populate.tsx",
+      "events": ["http"]
     }
-  ]
+  }
 }
