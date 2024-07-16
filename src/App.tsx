@@ -1,6 +1,7 @@
 // src/App.tsx
 import React, { createContext, useContext, useReducer } from "react";
 import { kv } from "@vercel/kv";
+import { checkDatabase } from "./checkDatabase"; // Import the checkDatabase function
 import RecipeList from "./components/RecipeList";
 import RecipeDetail from "./components/RecipeDetail";
 import RecipeForm from "./components/RecipeForm";
@@ -45,6 +46,18 @@ const recipeReducer = (state: RecipeState, action: RecipeAction) => {
 };
 
 const App = () => {
+
+  React.useEffect(() => {
+    const checkDatabaseAndDispatch = async () => {
+      const databasePopulated = await checkDatabase();
+      dispatch({
+        type: "LOAD_RECIPES",
+        payload: databasePopulated,
+      });
+    };
+
+    checkDatabaseAndDispatch();
+  }, []);
   const [state, dispatch] = useReducer(recipeReducer, {
     recipes: [],
     favorites: [],
