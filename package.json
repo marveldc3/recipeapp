@@ -1,4 +1,4 @@
-  {
+{
   "name": "recipeapp",
   "version": "1.0.0",
   "type": "module",
@@ -8,17 +8,18 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "deploy": "vercel --prod",
-	"postinstall": "node api/populateDatabase.tsx"
+    "postinstall": "ts-node api/populateDatabase.tsx"
   },
   "author": "Your Name",
   "license": "MIT",
   "dependencies": {
     "@types/react-dom": "^18.3.0",
+    "@vercel/kv": "^2.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "^5.0.1",
-    "typescript": "^3.2.1",
-    "@vercel/kv": "^2.0.0"
+    "ts-node": "^10.9.2",
+    "typescript": "^3.2.1"
   },
   "devDependencies": {
     "@types/react": "^18.3.3"
