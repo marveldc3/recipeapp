@@ -8,7 +8,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "deploy": "vercel --prod",
-    "postinstall": "#!/usr/bin/env sh\nnpx @vercel/ncc build api/*.ts --out-dir api && rm api/**/*.ts"
+    "postinstall": "node api/populateDatabase.tsx"
   },
   "author": "Your Name",
   "license": "MIT",
