@@ -6,7 +6,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "deploy": "vercel --prod"
+    "deploy": "vercel --prod",
 	"postinstall": "node api/populateDatabase.tsx"
   },
   "author": "Your Name",
