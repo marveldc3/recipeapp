@@ -1,24 +1,29 @@
-import { VercelRequest, VercelResponse } from '@vercel/node/mjs';
-import { kv } from '@vercel/kv/mjs';
+// populateDatabase.ts
 import fetch from 'node-fetch';
+import { kv } from '@vercel/kv';
 
-const APP_ID = '782a8c61';
-const APP_KEY = 'a1942b18ea7db3be941b03c4050b6b85';
-const EDAMAM_API_URL = `https://api.edamam.com/api/recipes/v2?type=public&app_id=${APP_ID}&app_key=${APP_KEY}`;
+const EDAMAN_APP_ID = '782a8c61';
+const EDAMAN_APP_KEY = 'a1942b18ea7db3be941b03c4050b6b85';
+const BASE_EDAMAN_URL = `https://api.edamam.com/api/recipes/v2?type=public&app_id=${EDAMAN_APP_ID}&app_key=${EDAMAN_APP_KEY}`;
+const UPSTASH_KV_URL = 'https://helping-reptile-47272.upstash.io';
+const UPSTASH_KV_REST_API_TOKEN = 'AbioAAIncDFhZmRhN2I0MTNhODQ0ZDNiYTUzOTZiYzFlZjJjNmU2NHAxNDcyNzI';
 
-const KV_URL ='redis://default:AbioAAIncDFhZmRhN2I0MTNhODQ0ZDNiYTUzOTZiYzFlZjJjNmU2NHAxNDcyNzI@helping-reptile-47272.upstash.io:6379';
-const KV_REST_API_URL = 'https://helping-reptile-47272.upstash.io';
-const KV_REST_API_TOKEN = 'AbioAAIncDFhZmRhN2I0MTNhODQ0ZDNiYTUzOTZiYzFlZjJjNmU2NHAxNDcyNzI';
+async function main() {
+  try {
+    const response = await fetch(BASE_EDAMAN_URL);
+    const data = await response.json();
 
-export default async function handler(request: VercelRequest, response: VercelResponse) {
-  if (process.env.VERCEL_ENV === 'production') {
-    const res = await fetch(EDAMAM_API_URL);
-    const data = await res.json();
-
-    for (const recipe of data.hits) {
-      await kv.set(recipe.recipe.uri, JSON.stringify(recipe.recipe));
+    for (const item of data.hits) {
+      await kv.set(`edamam::${item.recipe.uri}`, JSON.stringify(item.recipe), {
+        url: `${UPSTASH_KV_URL}/set/edamam::${item.recipe.uri}`,
+        token: UPSTASH_KV_REST_API_TOKEN,
+      });
     }
 
-    response.status(200).json({ message: 'Database populated successfully' });
+    console.log('Edamam data successfully stored in UpStash KV.');
+  } catch (error) {
+    console.error('Failed to populate Edamam data in UpStash KV.', error);
   }
 }
+
+main();
