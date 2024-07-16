@@ -78,7 +78,9 @@ const App = () => {
       <RecipeForm />
       <FavoriteRecipes />
     </RecipeContext.Provider>
+	<div>
 	<CheckKV />
+	</div>
   );
 };
 
