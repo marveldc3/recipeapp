@@ -1,6 +1,5 @@
 // src/App.tsx
-import { jsx as _jsx } from'react/jsx-runtime';
-import React from'react';
+import React, { createContext, useContext, useReducer } from "react";
 import { kv } from "@vercel/kv";
 import RecipeList from "./components/RecipeList";
 import RecipeDetail from "./components/RecipeDetail";
@@ -8,7 +7,6 @@ import RecipeForm from "./components/RecipeForm";
 import FavoriteRecipes from "./components/FavoriteRecipes";
 import Header from "./components/Header";
 import { Recipe, RecipeState, RecipeAction } from './types'; // Import the types
-import CheckKV from "./components/CheckKV"; 
 
 const RecipeContext = createContext<{
   state: RecipeState;
@@ -71,18 +69,16 @@ const App = () => {
     }
   };
 
- return (
+  return (
     <RecipeContext.Provider value={{ state, dispatch }}>
-      <div>
-        <Header setSearchQuery={setSearchQuery} />
-        <RecipeList />
-        <RecipeDetail recipeId={"some_recipe_id"} />
-        <RecipeForm />
-        <FavoriteRecipes />
-        <CheckKV />
-      </div>
+      <Header setSearchQuery={setSearchQuery} />
+      <RecipeList />
+      <RecipeDetail recipeId={"some_recipe_id"} />
+      <RecipeForm />
+      <FavoriteRecipes />
     </RecipeContext.Provider>
   );
 };
+
 export default App;
 export { RecipeContext };
