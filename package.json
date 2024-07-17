@@ -8,7 +8,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "deploy": "vercel --prod",
-	"postinstall": "node -e \"const fs = require('fs'); const rpl = require('replacer'); const fspath = require('path'); global.process.chdir(__dirname); fs.readFile('dist/index.html', 'utf8', (_err, data) => { const replacedData = rpl(`href='\\/`)(`href='./`)(\"\"\"); const secondReplacement = rpl(`src='.\"`)(\"\"); fs.writeFileSync('dist/index.html', replacedData + '\r\n' + secondReplacement(data), {'flag': 'w'}); });\"",
+	"postinstall": "node -e \"const fs = require('fs'); const rpl = require('replacer'); const fspath = require('path'); global.process.chdir(__dirname); fs.readFile('dist/index.html', 'utf8', (_err, data) => { const replacedData = rpl('href=\'\\/'')('href=\'./\'')(''); const secondReplacement = rpl('src=\'"')(''); fs.writeFileSync('dist/index.html', replacedData + '\n' + secondReplacement(data), {'flag': 'w'}); });\"",
     "populateDatabase": "ts-node --transpile-only populateDatabase.tsx",
     "fullStart": "npm run populateDatabase && npm start"
   },
