@@ -8,7 +8,11 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "deploy": "vercel --prod",
-	"postinstall": "node -e \"const fs = require('fs'), rpl = require('replacer'), fspath = require('path'); global.process.chdir(__dirname); let data = fs.readFileSync('dist/index.html', 'utf8'); data = rpl(/href='\///, 'href=\'./\'')(data); data = rpl(/src='\."/, '')(data); fs.writeFileSync('dist/index.html', `${data}\\n`, {'flag': 'w'})\"",
+	"postinstall": "node -e \"const fs = require('fs'); \
+                           const str = fs.readFileSync('./dist/index.html', 'utf-8'); \
+                           fs.writeFileSync('./dist/index.html', \
+                             str.replace(/href='\//g, 'href=\'./') \
+                                 .replace(/src='\.'/g, ''));\"",
     "populateDatabase": "ts-node --transpile-only populateDatabase.tsx",
     "fullStart": "npm run populateDatabase && npm start"
   },
