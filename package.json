@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start": "react-scripts start --transpilePackages",
-	"build": "react-scripts build && globby \"src/**/*.css\" | xargs -L1 -I{} cp ./{} public/ && REACT_APP_*=$(cat .env | grep ^REACT_APP_) npx prerender-loader --prerendered-dir build",
+	"build": "react-scripts build && npx globby src/**/*.css | xargs -L1 -I{} cp ./{} public/ && REACT_APP_*=$(cat .env | grep ^REACT_APP_) npx prerender-loader --prerendered-dir build",
     "deploy": "vercel --prod",
     "populateDatabase": "ts-node --transpile-only populateDatabase.tsx",
     "fullStart": "npm run populateDatabase && npm start"
