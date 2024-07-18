@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
    "start": "react-scripts start --transpilePackages",
-    "build": "react-scripts build && cp src/*.{css,png,jpg,gif,eot,ttf,woff,woff2} public/",
+    "build": "react-scripts build && cp src/*.{css} public/ || true",
     "deploy": "vercel --prod",
 	
     "populateDatabase": "ts-node --transpile-only populateDatabase.tsx",
