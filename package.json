@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start": "react-scripts start --transpilePackages",
-	"build": "babel src -d build",
+    "build": "babel src -d build",
     "deploy": "vercel --prod",
     "populateDatabase": "ts-node --transpile-only populateDatabase.tsx",
     "fullStart": "npm run populateDatabase && npm start"
@@ -26,6 +26,7 @@
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.14.5",
     "@types/react": "^18.3.3",
+    "babel-cli": "^6.26.0",
     "globby": "^14.0.2",
     "replacer": "^0.0.1"
   }
