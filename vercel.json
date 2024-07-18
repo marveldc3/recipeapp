@@ -1,8 +1,14 @@
 {
   "version": 2,
-  "headers": {
-    "/**/*.js": {
-      "Content-Type": "application/javascript"
+  "headers": [
+    {
+      "source": "/**/*.js",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/javascript"
+        }
+      ]
     }
-  }
+  ]
 }
