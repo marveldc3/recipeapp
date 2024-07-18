@@ -6,7 +6,6 @@
   "main": "index.js",
   "scripts": {
     "start": "react-scripts start --transpilePackages",
-    "build": "babel src -d build",
     "deploy": "vercel --prod",
     "populateDatabase": "ts-node --transpile-only populateDatabase.tsx",
     "fullStart": "npm run populateDatabase && npm start"
