@@ -1,20 +1,5 @@
 {
-  "builds": [{
-    "context": {},
-    "routes": [],
-    "rewrites": [],
-    "prerender": false,
-    "outputFileTracing": false,
-    "alias": {}
-  }],
-  "preview": {
-    "alias": {}
-  },
-  "settings": {
-    "serverlessFunctionsDir": ["functions"],
-    "aliases": []
-  },
-  "environmentVariables": {
-    "VERCEL_ANSWERS": "{ \"skipProjectSettings\": true }"
+  "env": {
+    "SKIP_PROJECT_SETTINGS_PROMPT": "true"
   }
 }
