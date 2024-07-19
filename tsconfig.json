@@ -1,6 +1,11 @@
 {
   "compilerOptions": {
     "target": "es5",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "module": "esnext",
     "strict": true,
     "jsx": "react",
@@ -8,7 +13,11 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
+    "baseUrl": "src",
     "outDir": "./dist"
   },
-  "include": ["src"]
+  "include": ["src"],
+  "paths": {
+    "@utils/*": ["src/utils/*"]
+  }
 }

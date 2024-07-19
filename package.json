@@ -27,6 +27,7 @@
     "@types/react": "^18.3.3",
     "babel-cli": "^6.26.0",
     "globby": "^14.0.2",
+    "parcel-bundler": "^1.12.5",
     "replacer": "^0.0.1"
   }
 }
