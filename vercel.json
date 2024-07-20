@@ -1,4 +1,13 @@
 {
+	
+ "version": 2,
+  "builds": [
+    {
+      "src": "build/index.html",
+      "use": "@vercel/static-build",
+      "config": {}
+    }
+  ]
   "env": {
     "SKIP_PROJECT_SETTINGS_PROMPT": "true"
   }
