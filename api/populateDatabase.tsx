@@ -1,4 +1,4 @@
-import { kv } from "@vercel/kv";
+import { KVNamespace } from "@vercel/kv";
 
 // Replace these credentials with your own
 const KV_URL = "redis://default:AbioAAIncDFhZmRhN2I0MTNhODQ0ZDNiYTUzOTZiYzFlZjJjNmU2NHAxNDcyNzI@helping-reptile-47272.upstash.io:6379";
@@ -7,7 +7,7 @@ const KV_REST_API_TOKEN = "AbioAAIncDFhZmRhN2I0MTNhODQ0ZDNiYTUzOTZiYzFlZjJjNmU2N
 const KV_REST_API_READ_ONLY_TOKEN = "ArioAAIgcDGeufx99Rtue4ELgOuxJHl2Ao2Ia9lbETKf9T3JFokPdg";
 
 // Initialize the KV client
-const kvClient = kv({
+const kvClient: KVNamespace = KVNamespace({
   url: KV_URL,
   namespace: "<namespace-key>",
   restApi: {
@@ -16,8 +16,6 @@ const kvClient = kv({
     readOnlyToken: KV_REST_API_READ_ONLY_TOKEN,
   },
 });
-
-const kv = kvClient.kv;
 
 // Function to populate the KV database with data from Edamam API
 async function populateKVDatabase(apiKey: string) {
@@ -29,7 +27,7 @@ async function populateKVDatabase(apiKey: string) {
     const data = await response.json();
 
     // Assuming the response contains the desired data
-    await kv.set("edamam_data", JSON.stringify(data));
+    await kvClient.set("edamam_data", JSON.stringify(data));
     console.log("Database populated successfully!");
   } catch (error) {
     console.error("Error populating the database:", error);
