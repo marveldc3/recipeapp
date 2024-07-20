@@ -2,9 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "./src",
-      "use": "@vercel/static-build"
+      "src": "./src/index.tsx",
+      "use": "@vercel/node"
     }
   ],
-  "output": "public"
+  "routes": [
+    {
+      "src": "/.*",
+      "dest": "${vercelDev}/public"
+    }
+  ]
 }
