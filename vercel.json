@@ -13,11 +13,12 @@
       "headers": {
         "Cache-Control": "public, max-age=31536000"
       }
-    },
+    }
+  ],
+  "rewrites": [
     {
-      "src": "/",
-      "dest": "/index.html",
-      "type": "rewrite"
+      "source": "/",
+      "destination": "/index.html"
     }
   ]
 }
