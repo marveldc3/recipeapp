@@ -5,6 +5,8 @@
   "description": "Application de recettes de cuisine",
   "main": "index.js",
   "scripts": {
+  "build": "parcel build --out-dir dist src/index.html",
+
     "start": "react-scripts start --transpilePackages",
     "deploy": "vercel --prod",
     "populateDatabase": "ts-node --transpile-only populateDatabase.tsx",

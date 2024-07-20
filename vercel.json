@@ -1,8 +1,5 @@
 {
   "env": {
     "SKIP_PROJECT_SETTINGS_PROMPT": "true"
-  },
-  "scripts": {
-  "build": "parcel build --out-dir dist src/index.html"
-}
+  }
 }
