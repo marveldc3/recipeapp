@@ -10,11 +10,11 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico" />
 <link rel="manifest" href="manifest.json">
   <title>Recette App</title>
-<link href="css/main*.css" rel="stylesheet" />
+<link href="${process.env.PUBLIC_URL}/css/main.css" rel="stylesheet" />
 </head>
 <body>
   <noscript>Vous devez activer JavaScript pour utiliser cette application.</noscript>
   <div id="root"></div>
-<script src="js/main*.js"></script> <!-- Updated line -->
+<script src="${process.env.PUBLIC_URL}/js/main.js"></script>
 </body>
 </html>
