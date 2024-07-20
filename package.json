@@ -4,13 +4,13 @@
   "type": "module",
   "description": "Application de recettes de cuisine",
   "main": "index.js",
-  "scripts": {
-     "build": "react-scripts build",
-     "tsc": "tsc",
-     "deploy": "vercel --prod",
-     "populateDatabase": "ts-node --transpile-only populateDatabase.tsx",
-     "fullStart": "npm run populateDatabase && npm start"
-   },
+"scripts": {
+  "build": "react-scripts build",
+  "tsc": "tsc",
+  "deploy": "npm install --legacy-peer-deps && vercel --prod",
+  "populateDatabase": "ts-node --transpile-only populateDatabase.tsx",
+  "fullStart": "npm run populateDatabase && npm start"
+},
   "author": "Your Name",
   "license": "MIT",
   "dependencies": {
