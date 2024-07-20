@@ -17,6 +17,8 @@ const kvClient = kv({
   },
 });
 
+const kv = kvClient.kv;
+
 // Function to populate the KV database with data from Edamam API
 async function populateKVDatabase(apiKey: string) {
   // Example URL for Edamam API
@@ -27,7 +29,7 @@ async function populateKVDatabase(apiKey: string) {
     const data = await response.json();
 
     // Assuming the response contains the desired data
-    await kvClient.kv.set("edamam_data", JSON.stringify(data));
+    await kv.set("edamam_data", JSON.stringify(data));
     console.log("Database populated successfully!");
   } catch (error) {
     console.error("Error populating the database:", error);
