@@ -4,19 +4,22 @@
   "type": "module",
   "description": "Application de recettes de cuisine",
   "main": "index.js",
-  "scripts": {
-     "build": "react-scripts build",
-     "tsc": "tsc",
-     "deploy": "vercel --prod",
-     "populateDatabase": "ts-node --transpile-only populateDatabase.tsx",
-     "fullStart": "npm run populateDatabase && npm start"
-   },
+"scripts": {
+  "tsc": "tsc",
+  "copyFiles": "mkdir static & cp public/* static || true && mkdir static/static & cp -R public/static static || true",
+  "start": "npm run copyFiles && parcel src/index.html",
+  "build": "npm run copyFiles && react-scripts build",
+  "deploy": "vercel --prod",
+  "populateDatabase": "ts-node --transpile-only populateDatabase.tsx",
+  "fullStart": "npm run populateDatabase && npm start"
+},
   "author": "Your Name",
   "license": "MIT",
   "dependencies": {
     "@types/react-dom": "^18.3.0",
     "@vercel/kv": "^2.0.0",
     "axios": "^1.7.2",
+    "copyfiles": "^2.4.1",
     "lodash": "^4.17.21",
     "ncc": "^0.3.6",
     "react": "^17.0.2",
