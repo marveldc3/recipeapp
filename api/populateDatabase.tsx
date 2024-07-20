@@ -1,4 +1,4 @@
-import { KVNamespace } from "@vercel/kv";
+import { kv } from "@vercel/kv";
 
 // Replace these credentials with your own
 const KV_URL = "redis://default:AbioAAIncDFhZmRhN2I0MTNhODQ0ZDNiYTUzOTZiYzFlZjJjNmU2NHAxNDcyNzI@helping-reptile-47272.upstash.io:6379";
@@ -7,7 +7,7 @@ const KV_REST_API_TOKEN = "AbioAAIncDFhZmRhN2I0MTNhODQ0ZDNiYTUzOTZiYzFlZjJjNmU2N
 const KV_REST_API_READ_ONLY_TOKEN = "ArioAAIgcDGeufx99Rtue4ELgOuxJHl2Ao2Ia9lbETKf9T3JFokPdg";
 
 // Initialize the KV client
-const kvClient: KVNamespace = KVNamespace({
+const kvClient = kv({
   url: KV_URL,
   namespace: "<namespace-key>",
   restApi: {
