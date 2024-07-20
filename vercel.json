@@ -3,7 +3,9 @@
   "builds": [
     {
       "use": "@vercel/static-build",
-      "config": {}
+      "config": {
+        "ignore": ["**/.parcel-cache/**"]
+      }
     }
   ],
   "routes": [
