@@ -27,7 +27,7 @@ async function populateKVDatabase(apiKey: string) {
     const data = await response.json();
 
     // Assuming the response contains the desired data
-    await kvClient.set("edamam_data", JSON.stringify(data));
+    await kvClient.kv.set("edamam_data", JSON.stringify(data));
     console.log("Database populated successfully!");
   } catch (error) {
     console.error("Error populating the database:", error);
