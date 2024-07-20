@@ -6,15 +6,6 @@
       "use": "@vercel/static-build"
     }
   ],
-  "routes": [
-    {
-      "src": "/",
-      "dest": "./public/index.html",
-      "headers": {
-        "Cache-Control": "public, max-age=31536000"
-      }
-    }
-  ],
   "rewrites": [
     {
       "source": "/",

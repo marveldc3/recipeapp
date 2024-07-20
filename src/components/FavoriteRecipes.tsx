@@ -1,4 +1,4 @@
-// src/components/FavoriteRecipes.tsx 0
+// src/components/FavoriteRecipes.tsx 
 import React, { useContext } from "react";
 import { RecipeContext } from "../App";
 import RecipeDetail from "./RecipeDetail";
