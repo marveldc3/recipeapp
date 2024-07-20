@@ -5,5 +5,11 @@
       "src": "./src",
       "use": "@vercel/static-build"
     }
+  ],
+  "routes": [
+    {
+      "src": "/",
+      "dest": "/index.html"
+    }
   ]
 }
