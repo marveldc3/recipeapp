@@ -3,8 +3,8 @@
   "builds": [
     {
       "src": "./src",
-      "use": "@vercel/static-build",
-      "directory": "public"
+      "use": "@vercel/static-build"
     }
-  ]
+  ],
+  "output": "public"
 }
