@@ -3,7 +3,7 @@
   "builds": [
     {
       "src": "src/**/*",
-      "use": "npm run build"
+      "use": "@vercel/static-build"
     }
   ],
   "routes": [
