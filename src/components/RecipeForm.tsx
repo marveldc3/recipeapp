@@ -1,10 +1,8 @@
-// src/components/RecipeForm.tsx
 import React, { useState, useContext } from "react";
 import { RecipeContext } from "../App";
-import { kv } from "@vercel/kv";
+
 const RecipeForm = () => {
   const { state, dispatch } = useContext(RecipeContext);
-  const { loading, error } = state;
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -14,7 +12,7 @@ const RecipeForm = () => {
   const [cuisine, setCuisine] = useState("");
   const [imageUrl, setImageUrl] = useState("");
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (
@@ -30,28 +28,35 @@ const RecipeForm = () => {
       return;
     }
 
-    try {
-      const newRecipe = { id: Date.now().toString(), title, description, ingredients, instructions, category, cuisine, prepTime: "N/A", servings: 0, imageUrl };
-      await kv.set("recipes", JSON.stringify([...state.recipes, newRecipe]));
-      dispatch({ type: "SET_RECIPES", payload: [...state.recipes, newRecipe] });
-      setTitle("");
-      setDescription("");
-      setIngredients("");
-      setInstructions("");
-      setCategory("");
-      setCuisine("");
-      setImageUrl("");
-      alert("Recipe added successfully!");
-    } catch (error) {
-      console.error("Error adding recipe:", error);
-      alert("Error adding recipe. Please try again later.");
-    }
+    const newRecipe = {
+      id: Date.now().toString(),
+      title,
+      description,
+      ingredients: ingredients.split(","),
+      instructions: instructions.split("."),
+      category,
+      cuisine,
+      prepTime: "N/A",
+      servings: 0,
+      imageUrl,
+    };
+
+    const updatedRecipes = [...state.recipes, newRecipe];
+    localStorage.setItem("recipes", JSON.stringify(updatedRecipes));
+    dispatch({ type: "SET_RECIPES", payload: updatedRecipes });
+
+    setTitle("");
+    setDescription("");
+    setIngredients("");
+    setInstructions("");
+    setCategory("");
+    setCuisine("");
+    setImageUrl("");
+    alert("Recipe added successfully!");
   };
 
   return (
     <div>
-      {loading && <p>Loading...</p>}
-      {error && <p>Error: {error}</p>}
       <form onSubmit={handleSubmit}>
         <label htmlFor="title">Title</label>
         <input type="text" id="title" value={title} onChange={(event) => setTitle(event.target.value)} />
