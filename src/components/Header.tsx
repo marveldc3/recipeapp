@@ -1,4 +1,3 @@
-// src/components/Header.tsx
 import React from "react";
 
 const Header = ({ setSearchQuery }: { setSearchQuery: (query: string) => void }) => {
