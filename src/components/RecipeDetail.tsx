@@ -1,4 +1,3 @@
-// src/components/RecipeDetail.tsx
 import React, { useContext } from "react";
 import { RecipeContext } from "../App";
 
