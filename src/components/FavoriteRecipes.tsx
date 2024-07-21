@@ -1,12 +1,9 @@
-// src/components/FavoriteRecipes.tsx 
 import React, { useContext } from "react";
 import { RecipeContext } from "../App";
 import RecipeDetail from "./RecipeDetail";
 
 const FavoriteRecipes = () => {
-  const { state } =
-
- useContext(RecipeContext);
+  const { state } = useContext(RecipeContext);
   const { favorites, recipes } = state;
 
   const favoriteRecipes = recipes.filter((recipe) => favorites.includes(recipe.id));
