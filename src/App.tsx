@@ -1,13 +1,11 @@
-// src/App.tsx
-import React, { createContext, useContext, useReducer } from "react";
-import { kv } from "@vercel/kv";
-import { checkDatabase } from "./components/checkDatabase"; // Import the checkDatabase function
+import React, { createContext, useContext, useReducer, useEffect } from "react";
 import RecipeList from "./components/RecipeList";
 import RecipeDetail from "./components/RecipeDetail";
 import RecipeForm from "./components/RecipeForm";
 import FavoriteRecipes from "./components/FavoriteRecipes";
 import Header from "./components/Header";
-import { Recipe, RecipeState, RecipeAction } from './types'; // Import the types
+import { Recipe, RecipeState, RecipeAction } from './types';
+import initialRecipes from './data/recipes.json'; // Mock API data
 
 const RecipeContext = createContext<{
   state: RecipeState;
@@ -39,6 +37,7 @@ const recipeReducer = (state: RecipeState, action: RecipeAction) => {
       const updatedFavorites = action.isFavorite
         ? [...state.favorites, action.payload]
         : state.favorites.filter((id: string) => id !== action.payload);
+      localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
       return { ...state, favorites: updatedFavorites };
     default:
       return state;
@@ -46,40 +45,35 @@ const recipeReducer = (state: RecipeState, action: RecipeAction) => {
 };
 
 const App = () => {
-
-  React.useEffect(() => {
-    const checkDatabaseAndDispatch = async () => {
-      const databasePopulated = await checkDatabase();
-      dispatch({
-        type: "LOAD_RECIPES",
-        payload: databasePopulated,
-      });
-    };
-
-    checkDatabaseAndDispatch();
-  }, []);
   const [state, dispatch] = useReducer(recipeReducer, {
     recipes: [],
-    favorites: [],
+    favorites: JSON.parse(localStorage.getItem("favorites") || "[]"),
     searchQuery: "",
     loading: false,
     error: "",
   });
 
+  useEffect(() => {
+    const loadRecipes = async () => {
+      dispatch({ type: "LOAD_RECIPES" });
+      try {
+        const storedRecipes = JSON.parse(localStorage.getItem("recipes") || "[]");
+        const recipes = storedRecipes.length > 0 ? storedRecipes : initialRecipes;
+        localStorage.setItem("recipes", JSON.stringify(recipes));
+        dispatch({ type: "SET_RECIPES", payload: recipes });
+      } catch (error) {
+        dispatch({ type: "ERROR_RECIPES", payload: "Failed to load recipes." });
+      }
+    };
+    loadRecipes();
+  }, []);
+
   const setSearchQuery = (query: string) => {
     dispatch({ type: "SET_SEARCH_QUERY", payload: query });
   };
 
-  const setFavorite = async (recipeId: string, isFavorite: boolean) => {
-    try {
-      const favorites = isFavorite
-        ? [...state.favorites, recipeId]
-        : state.favorites.filter((id: string) => id !== recipeId);
-      await kv.set("user_favorites", JSON.stringify(favorites));
-      dispatch({ type: "SET_FAVORITES", payload: favorites });
-    } catch (error) {
-      console.error("Error setting favorite:", error);
-    }
+  const setFavorite = (recipeId: string, isFavorite: boolean) => {
+    dispatch({ type: "SET_FAVORITE", payload: recipeId, isFavorite });
   };
 
   return (
