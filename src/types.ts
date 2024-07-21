@@ -1,4 +1,3 @@
-// src/types.ts 
 export interface Recipe {
   id: string;
   title: string;
@@ -22,5 +21,5 @@ export interface RecipeState {
 export interface RecipeAction {
   type: string;
   payload?: any;
-  isFavorite?: boolean; // Add this line
+  isFavorite?: boolean;
 }
