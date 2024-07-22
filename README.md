@@ -1,7 +1,3 @@
-Bien sûr ! Voici un modèle pour le fichier `README.md` de votre projet, écrit en français :
-
----
-
 # Application de Recettes
 
 ## Description
