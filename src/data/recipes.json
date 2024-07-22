@@ -1,0 +1,102 @@
+[
+  {
+    "id": "1",
+    "title": "Spaghetti Carbonara",
+    "ingredients": ["spaghetti", "eggs", "cheese", "bacon"],
+    "instructions": ["Boil pasta", "Cook bacon", "Mix eggs and cheese", "Combine"],
+    "imageUrl": "https://via.placeholder.com/50x50.png?text=Spaghetti",
+    "category": "Main Course",
+    "cuisine": "Italian",
+    "preparationTime": 30
+  },
+  {
+    "id": "2",
+    "title": "Caesar Salad",
+    "ingredients": ["lettuce", "croutons", "cheese", "dressing"],
+    "instructions": ["Toss lettuce", "Add croutons and cheese", "Top with dressing"],
+    "imageUrl": "https://via.placeholder.com/50x50.png?text=Salad",
+    "category": "Appetizer",
+    "cuisine": "American",
+    "preparationTime": 15
+  },
+  {
+    "id": "3",
+    "title": "Chicken Tacos",
+    "ingredients": ["taco shells", "chicken", "cheese", "lettuce", "salsa"],
+    "instructions": ["Cook chicken", "Assemble tacos", "Top with cheese, lettuce, and salsa"],
+    "imageUrl": "https://via.placeholder.com/50x50.png?text=Tacos",
+    "category": "Main Courses",
+    "cuisine": "Mexican",
+    "preparationTime": 15
+  },
+  {
+    "id": "4",
+    "title": "Beef Stroganoff",
+    "ingredients": ["beef", "mushrooms", "onion", "sour cream", "beef broth"],
+    "instructions": ["Cook beef and onions", "Add mushrooms", "Stir in sour cream and broth"],
+    "imageUrl": "https://via.placeholder.com/50x50.png?text=Beef",
+    "category": "Main Courses",
+    "cuisine": "Russian",
+    "preparationTime": 40
+  },
+  {
+    "id": "5",
+    "title": "Greek Salad",
+    "ingredients": ["cucumbers", "tomatoes", "olives", "feta cheese", "olive oil"],
+    "instructions": ["Chop vegetables", "Mix with olives and feta", "Drizzle with olive oil"],
+    "imageUrl": "https://via.placeholder.com/50x50.png?text=Greek+Salad",
+    "category": "Salads",
+    "cuisine": "Greek",
+    "preparationTime": 10
+  },
+  {
+    "id": "6",
+    "title": "Pad Thai",
+    "ingredients": ["rice noodles", "shrimp", "eggs", "peanuts", "bean sprouts"],
+    "instructions": ["Cook noodles", "Stir-fry shrimp and eggs", "Combine with noodles and peanuts"],
+    "imageUrl": "https://via.placeholder.com/50x50.png?text=Pad+Thai",
+    "category": "Main Courses",
+    "cuisine": "Thai",
+    "preparationTime": 25
+  },
+  {
+    "id": "7",
+    "title": "Chocolate Cake",
+    "ingredients": ["flour", "cocoa powder", "sugar", "eggs", "butter"],
+    "instructions": ["Mix ingredients", "Bake at 350°F for 30 minutes", "Cool and frost"],
+    "imageUrl": "https://via.placeholder.com/50x50.png?text=Cake",
+    "category": "Desserts",
+    "cuisine": "American",
+    "preparationTime": 60
+  },
+  {
+    "id": "8",
+    "title": "Sushi Rolls",
+    "ingredients": ["nori", "sushi rice", "fish", "vegetables", "soy sauce"],
+    "instructions": ["Prepare sushi rice", "Assemble rolls with fish and vegetables", "Serve with soy sauce"],
+    "imageUrl": "https://via.placeholder.com/50x50.png?text=Sushi",
+    "category": "Appetizers",
+    "cuisine": "Japanese",
+    "preparationTime": 45
+  },
+  {
+    "id": "9",
+    "title": "Lemon Tart",
+    "ingredients": ["flour", "butter", "lemon juice", "sugar", "eggs"],
+    "instructions": ["Make tart crust", "Prepare lemon filling", "Bake and cool"],
+    "imageUrl": "https://via.placeholder.com/50x50.png?text=Tart",
+    "category": "Desserts",
+    "cuisine": "French",
+    "preparationTime": 75
+  },
+  {
+    "id": "10",
+    "title": "Vegetable Soup",
+    "ingredients": ["carrots", "potatoes", "celery", "onions", "vegetable broth"],
+    "instructions": ["Chop vegetables", "Simmer in broth", "Season to taste"],
+    "imageUrl": "https://via.placeholder.com/50x50.png?text=Soup",
+    "category": "Soups",
+    "cuisine": "American",
+    "preparationTime": 50
+  }
+]

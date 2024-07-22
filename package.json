@@ -1,42 +1,28 @@
 {
   "name": "recipeapp",
   "version": "1.0.0",
-  "type": "module",
-  "description": "Application de recettes de cuisine",
-  "main": "index.js",
+  "description": "A React-based Recipe App",
+  "main": "src/index.tsx",
   "scripts": {
-    "tsc": "tsc",
-    "copyFiles": "mkdir -p build/components && cp -R src/components build/components",
-    "start": "npm run copyFiles && parcel src/index.html",
-    "build": "react-scripts build && npm run copyFiles",
-    "deploy": "vercel --prod",
-    "populateDatabase": "ts-node --transpile-only populateDatabase.tsx",
-    "fullStart": "npm run populateDatabase && npm start"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
-  "author": "Your Name",
-  "license": "MIT",
-  "dependencies": {
-    "@types/react-dom": "^18.3.0",
-    "@vercel/kv": "^2.0.0",
-    "axios": "^1.7.2",
-    "copyfiles": "^2.4.1",
-    "lodash": "^4.17.21",
-    "ncc": "^0.3.6",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-scripts": "^5.0.1",
-    "ts-node": "^10.9.2"
-  },
-  "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.14.5",
-    "@types/react": "^18.3.3",
-    "babel-cli": "^6.26.0",
-    "globby": "^14.0.2",
-    "parcel-bundler": "^1.12.5",
-    "postcss-flexbugs-fixes": "^5.0.2",
-    "replacer": "^0.0.1",
-    "typescript": "^4.9.5"
-  },
+ "dependencies": {
+  "react": "^18.3.1",
+  "react-dom": "^18.3.1",
+  "react-router-dom": "^6.25.1"
+},
+"devDependencies": {
+  "@types/react": "^18.3.3",
+  "@types/react-dom": "^18.3.0",
+  "react-scripts": "^5.0.1",
+  "typescript": "^5.5.3"
+},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "browserslist": {
     "production": [
       ">0.2%",

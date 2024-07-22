@@ -1,221 +1,59 @@
-/* src/index.css
-configuration 1 = vercel build a folder "dist" with everything except index.html so the deploy fail
-configuration 2 = vercel build a folder "build" with everything except components files so the deploy fail
-i can't modify or move files afterwards since they will be on vercel server so all workaround must be done before deploy
-index.html in both configuration must be generate by vercel 
-with the definitive configuration i don't need to do nothing else than 'git add .','git commit -m "0"','git push -u origin master' then deploy usung vercel website or vercel cli , that mean i must not do more commands than push to github
-don't creating a new project 
-don't create new file
-propose solution to either have index.html in "dist" folder (configuration 1) or components files in "build" folder (configuration 2)
-below all data you need 
+/* src/index.css*/
 
-configuration 1:
-
-package.json
-{
-  "name": "recipeapp",
-  "version": "1.0.0",
-  "type": "module",
-  "description": "Application de recettes de cuisine",
-  "main": "index.js",
-  "scripts": {
-    "start": "react-scripts start --transpilePackages",
-    "build": "tsc",
-    "deploy": "vercel --prod",
-    "populateDatabase": "ts-node --transpile-only populateDatabase.tsx",
-    "fullStart": "npm run populateDatabase && npm start"
-  },
-  "author": "Your Name",
-  "license": "MIT",
-  "dependencies": {
-    "@types/react-dom": "^18.3.0",
-    "@vercel/kv": "^2.0.0",
-    "axios": "^1.7.2",
-    "lodash": "^4.17.21",
-    "ncc": "^0.3.6",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-scripts": "^5.0.1",
-    "ts-node": "^10.9.2",
-    "typescript": "^3.2.1"
-  },
-  "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.14.5",
-    "@types/react": "^18.3.3",
-    "babel-cli": "^6.26.0",
-    "globby": "^14.0.2",
-    "parcel-bundler": "^1.12.5",
-    "replacer": "^0.0.1"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
-}
-
-vercel.json
-{
-  "version": 2,
-  "builds": [],
-  "routes": [
-    {
-      "src": "/.*",
-      "dest": "./public"
-    }
-  ]
-}
-
-tsconfig.json
-{
-  "compilerOptions": {
-    "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "module": "esnext",
-    "strict": true,
-    "jsx": "react",
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "baseUrl": "src",
-    "outDir": "./dist",
-    "rootDir": "src"
-  },
-  "include": ["src"],
-  "paths": {
-    "@utils/*": ["src/utils/*"]
-  }
-}
-
-however in this configuration index.html don't generate inside build folder
------------------------------------
-configuration 2
-
-package.json
-{
-  "name": "recipeapp",
-  "version": "1.0.0",
-  "type": "module",
-  "description": "Application de recettes de cuisine",
-  "main": "index.js",
-"scripts": {
-  "tsc": "tsc",
-  "copyFiles": "mkdir static & cp public/* static || true && mkdir static/static & cp -R public/static static || true",
-  "start": "npm run copyFiles && parcel src/index.html",
-  "build": "npm run copyFiles && react-scripts build",
-  "deploy": "vercel --prod",
-  "populateDatabase": "ts-node --transpile-only populateDatabase.tsx",
-  "fullStart": "npm run populateDatabase && npm start"
-},
-  "author": "Your Name",
-  "license": "MIT",
-  "dependencies": {
-    "@types/react-dom": "^18.3.0",
-    "@vercel/kv": "^2.0.0",
-    "axios": "^1.7.2",
-    "copyfiles": "^2.4.1",
-    "lodash": "^4.17.21",
-    "ncc": "^0.3.6",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-scripts": "^5.0.1",
-    "ts-node": "^10.9.2"
-  },
-  "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.14.5",
-    "@types/react": "^18.3.3",
-    "babel-cli": "^6.26.0",
-    "globby": "^14.0.2",
-    "parcel-bundler": "^1.12.5",
-    "postcss-flexbugs-fixes": "^5.0.2",
-    "replacer": "^0.0.1",
-    "typescript": "^4.9.5"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
-}
-
-vercel.json
-{
-  "version": 2,
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "build"
-      }
-    }
-  ],
-  "routes": [
-    {
-      "src": "/static/(.*)",
-      "dest": "/static/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
-  ]
-}
-
-tsconfig.json
-{
-  "compilerOptions": {
-    "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "module": "esnext",
-    "strict": true,
-    "jsx": "react",
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "baseUrl": "src",
-    "outDir": "./dist",
-    "rootDir": "src"
-  },
-  "include": ["src"],
-  "paths": {
-    "@utils/*": ["src/utils/*"]
-  }
-}*/
 body {
+  font-family: Arial, sans-serif;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+header {
+  background: #333;
+  color: #fff;
+  padding: 10px;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  margin: auto;
+}
+
+input, textarea, button {
+  display: block;
+  margin: 10px 0;
+  width: 100%;
+}
+
+.recipe-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.recipe-card {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin: 10px;
+  padding: 10px;
+  width: 200px;
+  text-align: center;
+}
+
+.error {
+  color: red;
+}
+
+h2 {
+  margin-top: 0;
 }
