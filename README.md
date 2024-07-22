@@ -17,7 +17,7 @@ Cette application de recettes permet aux utilisateurs de consulter, ajouter, et 
 1. **Clonez le Répertoire :**
 
    ```bash
-   git clone https://github.com/votre-utilisateur/recipeapp.git
+   git clone https://github.com/marveldc3/recipeapp.git
    cd recipeapp
    ```
 
