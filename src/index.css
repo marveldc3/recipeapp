@@ -154,7 +154,7 @@ h2 {
   font-size: 32px;
 }
 
-/* Make "All Categories" and "All Cuisines" full-width */
+
 select {
   width: 100%;
   padding: 10px;
@@ -162,7 +162,7 @@ select {
   font-size: 18px;
 }
 
-/* Media queries for responsiveness */
+
 @media (max-width: 768px) {
   .recipe-card {
     width: calc(50% - 20px);
