@@ -47,13 +47,13 @@ const RecipeList: React.FC<RecipeListProps> = ({ recipes }) => {
     <div>
       <input
         type="text"
-        placeholder="Search recipes..."
+        placeholder="Filter recipes..."
         value={search}
         onChange={e => setSearch(e.target.value)}
       />
 
       <div>
-        <label htmlFor="category">Category:</label>
+        
         <select
           id="category"
           value={selectedCategory || ''}
@@ -67,7 +67,7 @@ const RecipeList: React.FC<RecipeListProps> = ({ recipes }) => {
       </div>
 
       <div>
-        <label htmlFor="cuisine">Cuisine:</label>
+        
         <select
           id="cuisine"
           value={selectedCuisine || ''}

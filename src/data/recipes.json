@@ -4,7 +4,7 @@
     "title": "Spaghetti Carbonara",
     "ingredients": ["spaghetti", "eggs", "cheese", "bacon"],
     "instructions": ["Boil pasta", "Cook bacon", "Mix eggs and cheese", "Combine"],
-    "imageUrl": "https://via.placeholder.com/50x50.png?text=Spaghetti",
+    "imageUrl": "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
     "category": "Main Course",
     "cuisine": "Italian",
     "preparationTime": 30
@@ -14,7 +14,7 @@
     "title": "Caesar Salad",
     "ingredients": ["lettuce", "croutons", "cheese", "dressing"],
     "instructions": ["Toss lettuce", "Add croutons and cheese", "Top with dressing"],
-    "imageUrl": "https://via.placeholder.com/50x50.png?text=Salad",
+    "imageUrl": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
     "category": "Appetizer",
     "cuisine": "American",
     "preparationTime": 15
@@ -24,7 +24,7 @@
     "title": "Chicken Tacos",
     "ingredients": ["taco shells", "chicken", "cheese", "lettuce", "salsa"],
     "instructions": ["Cook chicken", "Assemble tacos", "Top with cheese, lettuce, and salsa"],
-    "imageUrl": "https://via.placeholder.com/50x50.png?text=Tacos",
+    "imageUrl": "https://images.unsplash.com/photo-1571997153543-516313a28363?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
     "category": "Main Courses",
     "cuisine": "Mexican",
     "preparationTime": 15
@@ -34,7 +34,7 @@
     "title": "Beef Stroganoff",
     "ingredients": ["beef", "mushrooms", "onion", "sour cream", "beef broth"],
     "instructions": ["Cook beef and onions", "Add mushrooms", "Stir in sour cream and broth"],
-    "imageUrl": "https://via.placeholder.com/50x50.png?text=Beef",
+    "imageUrl": "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
     "category": "Main Courses",
     "cuisine": "Russian",
     "preparationTime": 40
@@ -44,7 +44,7 @@
     "title": "Greek Salad",
     "ingredients": ["cucumbers", "tomatoes", "olives", "feta cheese", "olive oil"],
     "instructions": ["Chop vegetables", "Mix with olives and feta", "Drizzle with olive oil"],
-    "imageUrl": "https://via.placeholder.com/50x50.png?text=Greek+Salad",
+    "imageUrl": "https://images.unsplash.com/photo-1571091718767-18b5b1457add?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
     "category": "Salads",
     "cuisine": "Greek",
     "preparationTime": 10
@@ -54,7 +54,7 @@
     "title": "Pad Thai",
     "ingredients": ["rice noodles", "shrimp", "eggs", "peanuts", "bean sprouts"],
     "instructions": ["Cook noodles", "Stir-fry shrimp and eggs", "Combine with noodles and peanuts"],
-    "imageUrl": "https://via.placeholder.com/50x50.png?text=Pad+Thai",
+    "imageUrl": "https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
     "category": "Main Courses",
     "cuisine": "Thai",
     "preparationTime": 25
@@ -64,7 +64,7 @@
     "title": "Chocolate Cake",
     "ingredients": ["flour", "cocoa powder", "sugar", "eggs", "butter"],
     "instructions": ["Mix ingredients", "Bake at 350°F for 30 minutes", "Cool and frost"],
-    "imageUrl": "https://via.placeholder.com/50x50.png?text=Cake",
+    "imageUrl": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
     "category": "Desserts",
     "cuisine": "American",
     "preparationTime": 60
@@ -74,7 +74,7 @@
     "title": "Sushi Rolls",
     "ingredients": ["nori", "sushi rice", "fish", "vegetables", "soy sauce"],
     "instructions": ["Prepare sushi rice", "Assemble rolls with fish and vegetables", "Serve with soy sauce"],
-    "imageUrl": "https://via.placeholder.com/50x50.png?text=Sushi",
+    "imageUrl": "https://images.unsplash.com/photo-1587502537104-aac10f5fb6f7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
     "category": "Appetizers",
     "cuisine": "Japanese",
     "preparationTime": 45
@@ -84,7 +84,7 @@
     "title": "Lemon Tart",
     "ingredients": ["flour", "butter", "lemon juice", "sugar", "eggs"],
     "instructions": ["Make tart crust", "Prepare lemon filling", "Bake and cool"],
-    "imageUrl": "https://via.placeholder.com/50x50.png?text=Tart",
+    "imageUrl": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
     "category": "Desserts",
     "cuisine": "French",
     "preparationTime": 75
@@ -94,7 +94,7 @@
     "title": "Vegetable Soup",
     "ingredients": ["carrots", "potatoes", "celery", "onions", "vegetable broth"],
     "instructions": ["Chop vegetables", "Simmer in broth", "Season to taste"],
-    "imageUrl": "https://via.placeholder.com/50x50.png?text=Soup",
+    "imageUrl": "https://images.unsplash.com/photo-1515378960530-7c0da6231fb1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
     "category": "Soups",
     "cuisine": "American",
     "preparationTime": 50

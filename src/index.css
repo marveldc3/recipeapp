@@ -1,59 +1,190 @@
-/* src/index.css*/
-
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
+  background-color: #f0f8ff;
+  box-sizing: border-box;
 }
 
 header {
-  background: #333;
+  background: #00ffff;
   color: #fff;
-  padding: 10px;
+  padding: 20px;
+  text-align: center;
+  font-size: 48px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 nav {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 20px;
+  padding: 0 20px;
+  box-sizing: border-box;
 }
 
 nav a {
-  color: #fff;
   text-decoration: none;
   margin: 0 10px;
+  transition: color 0.3s;
+}
+
+nav a:first-child {
+  color: #000;
+  font-size: 24px;
+}
+
+nav a:nth-child(2),
+nav a:nth-child(3) {
+  color: #fff;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+nav a:hover {
+  color: #f0f8ff;
 }
 
 form {
   display: flex;
   flex-direction: column;
-  max-width: 600px;
   margin: auto;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 input, textarea, button {
   display: block;
   margin: 10px 0;
   width: 100%;
+  padding: 20px;
+  font-size: 24px;
+  border-radius: 50px;
+  border: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+input[type="text"] {
+  height: 100px;
+  font-size: 32px;
+  padding-left: 20px;
+}
+
+input[type="text"]::placeholder {
+  color: #00ffff;
+  opacity: 0.8;
+}
+
+button {
+  background-color: #00bfff;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+button:hover {
+  background-color: #0080ff;
+  transform: translateY(-2px);
+}
+
+.categories {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.category-label {
+  display: flex;
+  align-items: center;
+  margin: 10px;
+  font-size: 20px;
+}
+
+.category-label input[type="radio"] {
+  margin-right: 10px;
 }
 
 .recipe-list {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .recipe-card {
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  border: 1px solid #00ffff;
+  border-radius: 8px;
   margin: 10px;
-  padding: 10px;
-  width: 200px;
+  padding: 20px;
+  width: calc(33.33% - 20px);
   text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.recipe-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.recipe-card:hover {
+  transform: translateY(-10px);
 }
 
 .error {
   color: red;
+  font-size: 24px;
+  font-weight: bold;
 }
 
 h2 {
   margin-top: 0;
+  font-size: 32px;
+}
+
+/* Make "All Categories" and "All Cuisines" full-width */
+select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  font-size: 18px;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+  .recipe-card {
+    width: calc(50% - 20px);
+  }
+}
+
+@media (max-width: 480px) {
+  .recipe-card {
+    width: 100%;
+  }
+
+  input, textarea, button {
+    padding: 15px;
+    font-size: 20px;
+  }
+
+  input[type="text"] {
+    height: 80px;
+    font-size: 28px;
+  }
+
+  h2 {
+    font-size: 28px;
+  }
 }
